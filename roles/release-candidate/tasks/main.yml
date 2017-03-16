@@ -1,0 +1,14 @@
+#- name: Install Grid clients
+#  package:
+#    name: "{{ item }}"
+#    state: latest
+#  with_items:
+#    - "{{ pkg_list }}"
+
+#- name: Load debian-specific configuration
+#  include: debian.yml
+#  when: ansible_os_family == 'Debian'
+
+- name: Load RHEL-specific configuration
+  include: redhat.yml
+  when: ansible_os_family == 'RedHat'
