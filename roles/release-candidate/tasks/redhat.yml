@@ -6,4 +6,4 @@
     state: latest
 
 - name: Install all the packages from UMD repositories
-  shell: /usr/bin/repoquery --disablerepo=* --enablerepo=UMD* -a | xargs yum -y install > logs/package_details.log
+  shell: /usr/bin/repoquery --disablerepo=* --enablerepo=UMD* -a | xargs yum -y install > {{ logfile }}
