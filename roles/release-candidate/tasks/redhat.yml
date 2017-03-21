@@ -5,5 +5,8 @@
     name: yum-utils
     state: latest
 
+- name: Get all the packages from UMD repositories
+  shell: /usr/bin/repoquery --disablerepo=* --enablerepo=UMD* -a > {{ logfile }}
+
 - name: Install all the packages from UMD repositories
-  shell: /usr/bin/repoquery --disablerepo=* --enablerepo=UMD* -a | xargs yum -y install > {{ logfile }}
+  shell: yum -y install $(cat {{ logfile }})
