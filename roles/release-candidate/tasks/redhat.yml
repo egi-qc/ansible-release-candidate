@@ -6,7 +6,11 @@
     state: latest
 
 - name: Get all the packages from UMD repositories
-  shell: /usr/bin/repoquery --disablerepo=* --enablerepo=UMD* -a > {{ logfile }}
+  shell: /usr/bin/repoquery --disablerepo=* --enablerepo=UMD* -a
+  register: pkglist
+
+- name: Save package list in file
+  copy: content="{{ pkglist.stdout }}" dest={{ logfile }}
 
 - name: Install all the packages from UMD repositories
   shell: yum -y install $(cat {{ logfile }})
