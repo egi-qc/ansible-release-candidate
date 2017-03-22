@@ -14,7 +14,7 @@
 
 - name: Stat file
   stat:
-    path: {{ logfile }}
+    path: "{{ logfile }}"
   register: sym
 
 - debug:
