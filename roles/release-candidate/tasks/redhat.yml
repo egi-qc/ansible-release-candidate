@@ -12,5 +12,14 @@
 - name: Save package list in file
   copy: content="{{ pkglist.stdout }}" dest={{ logfile }}
 
+- name: Stat file
+  stat:
+    path: {{ logfile }}
+  register: sym
+
+- debug:
+    msg: "Path exists and isn't a symlink"
+  when: sym.stat.islnk is defined and sym.stat.islnk == False
+
 - name: Install all the packages from UMD repositories
   shell: yum -y install $(cat {{ logfile }})
