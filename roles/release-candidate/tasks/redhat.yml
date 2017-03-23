@@ -10,7 +10,7 @@
   register: pkglist
 
 - name: Save package list in file
-  copy: content="{{ pkglist.stdout }}" dest={{ logfile }}
+  copy: content="{{ pkglist.stdout }}" dest={{ logfile }} owner=centos group=centos
 
 - name: Stat file
   stat:
@@ -20,6 +20,12 @@
 - debug:
     msg: "Path exists and isn't a symlink"
   when: sym.stat.islnk is defined and sym.stat.islnk == False
+
+- shell: /bin/ls -l {{ logfile | dirname }}
+  register: lsdir
+
+- debug:
+    msg: "LS command: {{ lsdir.stdout}}"
 
 - name: Install all the packages from UMD repositories
   shell: yum -y install $(cat {{ logfile }})
