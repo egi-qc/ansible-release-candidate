@@ -1,9 +1,4 @@
-#- name: Install Grid clients
-#  package:
-#    name: "{{ item }}"
-#    state: latest
-#  with_items:
-#    - "{{ pkg_list }}"
+- name:
 
 #- name: Load debian-specific configuration
 #  include: debian.yml

@@ -1,3 +1,4 @@
 ---
 dependencies:
-  - { role: 'umd' }
+  - { role: 'umd' when distribution == "umd" }
+  - { role: 'cmd' when distribution == "cmd" }

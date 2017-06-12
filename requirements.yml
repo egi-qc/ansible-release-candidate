@@ -1,3 +1,7 @@
 - src: https://github.com/egi-qc/ansible-umd
   version: master
   name: umd
+
+- src: https://github.com/egi-qc/ansible-cmd
+  version: master
+  name: cmd
