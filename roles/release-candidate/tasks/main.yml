@@ -1,5 +1,3 @@
-- name:
-
 #- name: Load debian-specific configuration
 #  include: debian.yml
 #  when: ansible_os_family == 'Debian'
