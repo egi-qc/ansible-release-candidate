@@ -1,6 +1,6 @@
-#- name: Load debian-specific configuration
-#  include: debian.yml
-#  when: ansible_os_family == 'Debian'
+- name: Load debian-specific configuration
+  include: debian.yml
+  when: ansible_os_family == 'Debian'
 
 - name: Load RHEL-specific configuration
   include: redhat.yml

@@ -1,0 +1,13 @@
+- name: Get all packages from candidate repo
+  shell: grep ^Package /var/lib/apt/lists/repository.egi.eu_sw_production_cmd-os_candidate_*_Packages | awk '{print $2}'
+  register: pkglist
+
+#- debug: msg="{{ pkglist.keys() }}"
+#- debug: msg="{{ pkglist.stdout }}"
+
+- name: Install packages from /tmp/candidate.pkglist file
+  apt:
+    name: "{{ item }}"
+    state: installed
+  with_items:
+    - "{{ pkglist.stdout.split('\n') }}"
