@@ -13,8 +13,8 @@
   copy: 
     content: "{{ pkglist.stdout }}"
     dest: "{{ logfile }}"
-    owner: {{ ansible_user_id }}
-    group: {{ ansible_user_id }}
+    owner: "{{ ansible_user_id }}"
+    group: "{{ ansible_user_id }}"
 
 - name: Stat file
   stat:
