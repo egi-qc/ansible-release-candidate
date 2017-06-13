@@ -11,3 +11,4 @@
     state: installed
   with_items:
     - "{{ pkglist.stdout.split('\n') }}"
+  when: ansible_os_family == 'RedHat'
