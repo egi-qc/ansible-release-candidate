@@ -1,14 +1,14 @@
 - name: Get all packages from candidate repo
   shell: grep ^Package /var/lib/apt/lists/repository.egi.eu_sw_production_cmd-os_candidate_*_Packages | awk '{print $2}'
-  register: pkglist
+  register: pkglist_raw
 
-#- debug: msg="{{ pkglist.keys() }}"
-#- debug: msg="{{ pkglist.stdout }}"
+- set_fact:
+    pkglist: pkglist.stdout.split('\n')
+  when: pkglist_raw is defined
 
-- name: Install packages from /tmp/candidate.pkglist file
+- name: Install candidate repo packages
   apt:
     name: "{{ item }}"
     state: installed
   with_items:
-    - "{{ pkglist.stdout.split('\n') }}"
-  when: ansible_os_family == 'RedHat'
+    - "{{ pkglist | default([]) }}"
