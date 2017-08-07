@@ -6,7 +6,7 @@
     state: latest
 
 - name: Get all the packages from CMD repositories
-  shell: /usr/bin/repoquery --qf="%{name}" --disablerepo=* --enablerepo=CMD-OS-*-candidate* -a
+  shell: /usr/bin/repoquery --qf="%{name}" --disablerepo=* --enablerepo={{ distribution|upper }}-*-candidate* -a
   register: pkglist
 
 - name: Save package list in file
