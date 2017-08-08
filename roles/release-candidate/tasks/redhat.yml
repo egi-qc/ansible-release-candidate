@@ -6,7 +6,7 @@
     state: latest
 
 - name: Get all the packages from CMD repositories
-  shell: /usr/bin/repoquery --qf="%{name}" --disablerepo=* --enablerepo={{ distribution|upper }}-*-candidate* -a
+  shell: "/usr/bin/repoquery --qf="%{name}" --disablerepo=* --enablerepo={{ distribution|upper }}-*-candidate* -a"
   register: pkglist
 
 - name: Save package list in file
@@ -16,20 +16,34 @@
     owner: "{{ ansible_user_id }}"
     group: "{{ ansible_user_id }}"
 
-- name: Stat file
-  stat:
-    path: "{{ logfile }}"
-  register: sym
+- name: Save excluded packages in file
+  copy:
+    src: "{{ role_path }}/files/exclude.pkgs"
+    dest: "exclude.pkgs"
 
-- debug:
-    msg: "Path exists and isn't a symlink"
-  when: sym.stat.islnk is defined and sym.stat.islnk == False
+- name: Save unmatched packages
+  shell: "/bin/fgrep -v -f exclude.pkgs {{ logfile }}"
+  register: pkglist_unmatched
 
-- shell: /bin/ls -l {{ logfile | dirname }}
-  register: lsdir
+- name: Save package list in file
+  copy: 
+    content: "{{ pkglist.stdout }}"
+    dest: "{{ logfile }}"
 
-- debug:
-    msg: "LS command: {{ lsdir.stdout}}"
+#- name: Stat file
+#  stat:
+#    path: "{{ logfile }}"
+#  register: sym
+#
+#- debug:
+#    msg: "Path exists and isn't a symlink"
+#  when: sym.stat.islnk is defined and sym.stat.islnk == False
+#
+#- shell: /bin/ls -l {{ logfile | dirname }}
+#  register: lsdir
+#
+#- debug:
+#    msg: "LS command: {{ lsdir.stdout}}"
 
 - name: Install all the packages from CMD repositories
   shell: yum -y install $(cat {{ logfile }})
