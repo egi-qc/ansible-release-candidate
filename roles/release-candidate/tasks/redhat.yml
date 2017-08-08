@@ -5,45 +5,32 @@
     name: yum-utils
     state: latest
 
+- set_fact:
+    complete_pkglist: "{{ logfile | dirname }}/complete.pkgs"
+    excluded_pkglist: "{{ logfile | dirname }}/excluded.pkgs"
+
 - name: Get all the packages from CMD repositories
-  shell: "/usr/bin/repoquery --qf="%{name}" --disablerepo=* --enablerepo={{ distribution|upper }}-*-candidate* -a"
+  shell: /usr/bin/repoquery --qf="%{name}" --disablerepo=* --enablerepo={{ distribution|upper }}-*-candidate* -a
   register: pkglist
 
 - name: Save package list in file
   copy: 
     content: "{{ pkglist.stdout }}"
-    dest: "{{ logfile }}"
-    owner: "{{ ansible_user_id }}"
-    group: "{{ ansible_user_id }}"
+    dest: "{{ complete_pkglist }}"
 
 - name: Save excluded packages in file
   copy:
     src: "{{ role_path }}/files/exclude.pkgs"
-    dest: "exclude.pkgs"
+    dest: "{{ excluded_pkglist }}" 
 
 - name: Save unmatched packages
-  shell: "/bin/fgrep -v -f exclude.pkgs {{ logfile }}"
+  shell: "/bin/fgrep -v -f {{ excluded_pkglist }} {{ complete_pkglist }}"
   register: pkglist_unmatched
 
 - name: Save package list in file
   copy: 
-    content: "{{ pkglist.stdout }}"
+    content: "{{ pkglist_unmatched.stdout }}"
     dest: "{{ logfile }}"
-
-#- name: Stat file
-#  stat:
-#    path: "{{ logfile }}"
-#  register: sym
-#
-#- debug:
-#    msg: "Path exists and isn't a symlink"
-#  when: sym.stat.islnk is defined and sym.stat.islnk == False
-#
-#- shell: /bin/ls -l {{ logfile | dirname }}
-#  register: lsdir
-#
-#- debug:
-#    msg: "LS command: {{ lsdir.stdout}}"
 
 - name: Install all the packages from CMD repositories
   shell: yum -y install $(cat {{ logfile }})
