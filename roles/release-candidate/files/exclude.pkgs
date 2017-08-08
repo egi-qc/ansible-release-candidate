@@ -3,3 +3,5 @@ emi-cream-ce-no-mysql
 emi-voms-oracle
 fts-python
 storm-native-libs-gpfs
+vomsxrd-compat
+vomsxrd-compat-devel
