@@ -4,6 +4,14 @@
   yum:
     name: yum-utils
     state: latest
+  when: cmd_distribution != "cmd-one"
+
+- name: Install yum-utils
+  yum:
+    name: yum-utils
+    state: latest
+    disablerepo: CMD-ONE*
+  when: cmd_distribution == "cmd-one"
 
 - set_fact:
     complete_pkglist: "{{ logfile | dirname }}/complete.pkgs"
