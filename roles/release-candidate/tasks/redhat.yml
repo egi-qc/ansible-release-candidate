@@ -41,9 +41,9 @@
     dest: "{{ logfile }}"
 
 - name: Install all the packages from CMD repositories
-  shell: yum -y install $(cat {{ logfile }})
+  shell: yum -y install --setopt=protected_multilib=false $(cat {{ logfile }})
   when: (ansible_distribution == "CentOS") or (ansible_distribution == "Scientific") and (release == "6")
 
 - name: Install all the packages from CMD repositories
-  shell: yum -y install --setopt=protected_multilib=false $(cat {{ logfile }})
+  shell: yum -y install $(cat {{ logfile }})
   when: (ansible_distribution == "CentOS") and (release == "7")
