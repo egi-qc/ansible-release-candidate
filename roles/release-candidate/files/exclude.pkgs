@@ -13,3 +13,5 @@ python-keystone-voms
 condor-classads-blah-patch
 emi-cream-nagios
 gridsite-clients
+glite-jdl-api-java-doc
+glite-ce-common-java-doc
