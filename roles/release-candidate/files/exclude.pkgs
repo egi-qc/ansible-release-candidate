@@ -12,3 +12,4 @@ emi-dpm_mysql
 python-keystone-voms
 condor-classads-blah-patch
 emi-cream-nagios
+gridsite-clients
