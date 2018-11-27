@@ -16,8 +16,5 @@ gridsite-clients
 glite-jdl-api-java-doc
 glite-ce-common-java-doc
 python2-crypto
-## packages with Conflicts set
-dmlite-dpmdisk-domeonly
-dmlite-dpmhead-domeonly
 ## obsoleted
 emi-dpm_disk
