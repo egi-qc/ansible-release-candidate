@@ -43,8 +43,17 @@
     src: "{{ role_path }}/files/exclude.pkgs"
     dest: "{{ excluded_pkglist }}" 
 
-- name: Save unmatched packages
+- name: Save unmatched packages (from excluded)
   shell: "/bin/fgrep -v -f {{ excluded_pkglist }} {{ complete_pkglist }}"
+  register: pkglist_unmatched
+
+- name: Save package list in file
+  copy: 
+    content: "{{ pkglist_unmatched.stdout }}"
+    dest: "{{ logfile }}"
+    
+- name: Save unmatched packages (from conflict)
+  shell: "/bin/fgrep -v -f {{ conflict_pkglist }} {{ logfile }}"
   register: pkglist_unmatched
 
 - name: Save package list in file
