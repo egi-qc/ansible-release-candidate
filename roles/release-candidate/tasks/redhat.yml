@@ -18,15 +18,15 @@
     excluded_pkglist: "{{ logfile | dirname }}/excluded.pkgs"
     conflict_pkglist: "{{ logfile | dirname }}/conflict.pkgs"
 
-- name: Validate conflict packages first: save file
+- name: Validate conflict packages first (save file)
   copy:
     src: "{{ role_path }}/files/conflict.pkgs"
     dest: "{{ conflict_pkglist }}" 
 
-- name: Validate conflict packages first: install packages
+- name: Validate conflict packages first (install packages)
   shell: yum -y install --setopt=protected_multilib=false $(cat {{ conflict_pkglist }})
 
-- name: Validate conflict packages first: remove packages
+- name: Validate conflict packages first (remove packages)
   shell: yum -y remove $(cat {{ conflict_pkglist }})
 
 - name: Get all the packages from UMD/CMD repositories
