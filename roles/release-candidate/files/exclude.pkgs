@@ -19,3 +19,5 @@ python2-crypto
 ## packages with Conflicts set
 dmlite-dpmdisk-domeonly
 dmlite-dpmhead-domeonly
+## obsoleted
+emi-dpm_disk
