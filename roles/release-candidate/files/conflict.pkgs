@@ -1,3 +1,4 @@
 ## packages with Conflicts set (only applies to RPM spec)
 dmlite-dpmdisk-domeonly
 dmlite-dpmhead-domeonly
+dmlite-libs
