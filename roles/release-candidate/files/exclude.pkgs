@@ -19,3 +19,6 @@ python2-crypto
 ## obsoleted
 emi-dpm_disk
 lcgdm-dav-libs
+lcgdm-dav
+lcgdm-dav-devel
+mod_lcgdm_dav
