@@ -22,3 +22,11 @@ lcgdm-dav-libs
 lcgdm-dav
 lcgdm-dav-devel
 mod_lcgdm_dav
+dpm-dsi
+dpm-python
+dpm-xrootd
+dpm-xrootd-devel
+lfc-python
+nordugrid-arc-python
+xrootd-python
+cvmfs-config-default
