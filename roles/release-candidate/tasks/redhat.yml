@@ -16,18 +16,26 @@
 - set_fact:
     complete_pkglist: "{{ logfile | dirname }}/complete.pkgs"
     excluded_pkglist: "{{ logfile | dirname }}/excluded.pkgs"
-    conflict_pkglist: "{{ logfile | dirname }}/conflict.pkgs"
+    conflict_pkglist: "{{ logfile | dirname }}/conflict.{{ distribution }}.pkgs"
+
+- name: Check if conflicts file exists
+  stat: 
+    path: "{{ role_path }}/files/conflict.{{ distribution }}.pkgs"
+  register: conflict_file
 
 - name: Validate conflict packages first (save file)
   copy:
-    src: "{{ role_path }}/files/conflict.pkgs"
-    dest: "{{ conflict_pkglist }}" 
+    src: "{{ role_path }}/files/conflict.{{ distribution }}.pkgs"
+    dest: "{{ conflict_pkglist }}"
+  when: conflict_file.stat.exists == True
 
 - name: Validate conflict packages first (install packages)
   shell: yum -y install --setopt=protected_multilib=false $(cat {{ conflict_pkglist }})
+  when: conflict_file.stat.exists == True
 
 - name: Validate conflict packages first (remove packages)
   shell: yum -y remove $(cat {{ conflict_pkglist }})
+  when: conflict_file.stat.exists == True
 
 - name: Get all the packages from UMD/CMD repositories
   shell: /usr/bin/repoquery --qf="%{name}" --disablerepo=* --enablerepo={{ distribution|upper }}-*-candidate* -a
@@ -55,11 +63,13 @@
 - name: Save unmatched packages (from conflict)
   shell: "/bin/fgrep -v -f {{ conflict_pkglist }} {{ logfile }}"
   register: pkglist_unmatched
+  when: conflict_file.stat.exists == True
 
 - name: Save package list in file
   copy: 
     content: "{{ pkglist_unmatched.stdout }}"
     dest: "{{ logfile }}"
+  when: conflict_file.stat.exists == True
 
 - name: Install all the packages from CMD repositories
   shell: yum -y install --setopt=protected_multilib=false $(cat {{ logfile }})
