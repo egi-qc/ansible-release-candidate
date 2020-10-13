@@ -3,4 +3,5 @@ dmlite-dpmhead-domeonly
 dmlite-libs
 globus-usage
 globus-usage-devel
-xrdcl-http
+python34-xrootd
+python36-xrootd
