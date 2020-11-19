@@ -44,3 +44,5 @@ nordugrid-arc-client-tools
 nordugrid-arc-information-index
 nordugrid-arc-compute-element
 xrootd-tests
+python34-xrootd
+python36-xrootd
