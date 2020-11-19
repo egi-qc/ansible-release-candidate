@@ -46,3 +46,5 @@ nordugrid-arc-compute-element
 xrootd-tests
 python34-xrootd
 python36-xrootd
+voms-clients-cpp
+cdmi-storm
