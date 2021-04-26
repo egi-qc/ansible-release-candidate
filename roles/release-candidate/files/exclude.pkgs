@@ -43,6 +43,7 @@ nordugrid-arc-ws-monitor
 nordugrid-arc-client-tools
 nordugrid-arc-information-index
 nordugrid-arc-compute-element
+nordugrid-arc-plugins-xrootd
 xrootd-tests
 python34-xrootd
 python36-xrootd
