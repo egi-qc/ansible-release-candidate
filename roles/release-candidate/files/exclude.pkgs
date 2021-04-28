@@ -48,4 +48,3 @@ xrootd-tests
 python34-xrootd
 python36-xrootd
 cdmi-storm
-voms-clients-cpp
