@@ -4,3 +4,4 @@ dmlite-libs
 globus-usage
 globus-usage-devel
 voms-clients
+htcondor-ce-collector
