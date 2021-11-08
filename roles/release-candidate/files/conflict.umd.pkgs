@@ -8,5 +8,3 @@ htcondor-ce-collector
 grpc
 grpc-devel
 grpc-plugins
-BLAH
-BLAH-debuginfo
