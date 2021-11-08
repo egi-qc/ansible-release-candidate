@@ -49,3 +49,4 @@ python34-xrootd
 python36-xrootd
 cdmi-storm
 condor-credmon-oauth
+python2-scitokens
