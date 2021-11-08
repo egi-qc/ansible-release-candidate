@@ -5,3 +5,6 @@ globus-usage
 globus-usage-devel
 voms-clients
 htcondor-ce-collector
+grpc
+grpc-devel
+grpc-plugins
