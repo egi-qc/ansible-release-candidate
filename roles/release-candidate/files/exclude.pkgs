@@ -52,3 +52,10 @@ condor-credmon-oauth
 python2-scitokens
 BLAH
 BLAH-debuginfo
+glite-ce-cream
+glite-ce-cream-api-java
+glite-ce-cream-cli
+glite-ce-cream-client-api-c
+glite-ce-cream-client-devel
+glite-ce-cream-core
+glite-ce-cream-utils
