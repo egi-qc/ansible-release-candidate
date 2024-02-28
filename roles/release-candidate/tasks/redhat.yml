@@ -37,8 +37,8 @@
   shell: yum -y remove $(cat {{ conflict_pkglist }})
   when: conflict_file.stat.exists == True
 
-- name: Get all the packages from UMD/CMD repositories
-  shell: /usr/bin/repoquery --qf="%{name}" --disablerepo=* --enablerepo={{ distribution|upper }}-*-candidate* -a
+- name: Get all the packages from {{ distribution|upper }}-{{ release }} repositories
+  shell: /usr/bin/repoquery --qf="%{name}" --repoid={{ distribution|upper }}-{{ release }}-base --repoid={{ distribution|upper }}-{{ release }}-testing --repoid={{ distribution|upper }}-{{ release }}-updates -a
   register: pkglist
 
 - name: Save package list in file
