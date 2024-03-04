@@ -38,7 +38,7 @@
   when: conflict_file.stat.exists == True
 
 - name: Get all the packages from {{ distribution|upper }}-{{ release }} repositories
-  shell: /usr/bin/repoquery --qf="%{name}" --repoid={{ distribution|upper }}-{{ release }}-base --repoid={{ distribution|upper }}-{{ release }}-testing --repoid={{ distribution|upper }}-{{ release }}-updates -a
+  shell: /usr/bin/repoquery --qf="%{name}" --repoid={{ distribution|upper }}-{{ release }}-base-nexus --repoid={{ distribution|upper }}-{{ release }}-testing-nexus --repoid={{ distribution|upper }}-{{ release }}-updates-nexus -a
   register: pkglist
 
 - name: Save package list in file
