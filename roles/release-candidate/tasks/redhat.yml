@@ -16,16 +16,18 @@
 - set_fact:
     complete_pkglist: "{{ logfile | dirname }}/complete.pkgs"
     excluded_pkglist: "{{ logfile | dirname }}/excluded.pkgs"
-    conflict_pkglist: "{{ logfile | dirname }}/conflict.{{ distribution }}.pkgs"
+    conflict_pkglist: "{{ logfile | dirname }}/conflict.{{ distribution }}{{ release }}.pkgs"
+    base_repository: "{{ distribution|upper }}-{{ release }}-release-nexus"
+    testing_repository: "{{ distribution|upper }}-{{ release }}-testing-nexus"
 
 - name: Check if conflicts file exists
-  stat: 
-    path: "{{ role_path }}/files/conflict.{{ distribution }}.pkgs"
+  stat:
+    path: "{{ role_path }}/files/conflict.{{ distribution }}{{ release }}.pkgs"
   register: conflict_file
 
 - name: Validate conflict packages first (save file)
   copy:
-    src: "{{ role_path }}/files/conflict.{{ distribution }}.pkgs"
+    src: "{{ role_path }}/files/conflict.{{ distribution }}{{ release }}.pkgs"
     dest: "{{ conflict_pkglist }}"
   when: conflict_file.stat.exists == True
 
@@ -37,44 +39,44 @@
   shell: yum -y remove $(cat {{ conflict_pkglist }})
   when: conflict_file.stat.exists == True
 
-- name: Get all the packages from {{ distribution|upper }}-{{ release }} repositories
-  shell: /usr/bin/repoquery --qf="%{name}" --repoid={{ distribution|upper }}-{{ release }}-base-nexus --repoid={{ distribution|upper }}-{{ release }}-testing-nexus --repoid={{ distribution|upper }}-{{ release }}-updates-nexus -a
+- name: Get all the packages from {{ base_repository }} and {{ testing_repository  }} repositories
+  shell: /usr/bin/repoquery --qf="%{name}" --repoid={{ base_repository }} --repoid={{ testing_repository }} -a
   register: pkglist
 
 - name: Save package list in file
-  copy: 
+  copy:
     content: "{{ pkglist.stdout }}"
     dest: "{{ complete_pkglist }}"
 
 - name: Save excluded packages in file
   copy:
     src: "{{ role_path }}/files/exclude.pkgs"
-    dest: "{{ excluded_pkglist }}" 
+    dest: "{{ excluded_pkglist }}"
 
 - name: Save unmatched packages (from excluded)
   shell: "/bin/fgrep -v -f {{ excluded_pkglist }} {{ complete_pkglist }}"
   register: pkglist_unmatched
 
 - name: Save package list in file
-  copy: 
+  copy:
     content: "{{ pkglist_unmatched.stdout }}"
     dest: "{{ logfile }}"
-    
+
 - name: Save unmatched packages (from conflict)
   shell: "/bin/fgrep -v -f {{ conflict_pkglist }} {{ logfile }}"
   register: pkglist_unmatched
   when: conflict_file.stat.exists == True
 
 - name: Save package list in file
-  copy: 
+  copy:
     content: "{{ pkglist_unmatched.stdout }}"
     dest: "{{ logfile }}"
   when: conflict_file.stat.exists == True
 
-- name: Install all the packages from {{ distribution|upper }}-{{ release }} repositories
+- name: Install all the available packages
   shell: yum -y install --setopt=protected_multilib=false $(cat {{ logfile }})
   when: (ansible_distribution == "CentOS") or (ansible_distribution == "Scientific") and (release == "6")
 
-- name: Install all the packages from {{ distribution|upper }}-{{ release }} repositories
+- name: Install all the available packages
   shell: yum -y install $(cat {{ logfile }})
   when: (ansible_distribution == "CentOS") and (release == "7")
