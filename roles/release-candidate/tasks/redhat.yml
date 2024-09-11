@@ -15,7 +15,7 @@
 
 - set_fact:
     complete_pkglist: "{{ logfile | dirname }}/complete.pkgs"
-    excluded_pkglist: "{{ logfile | dirname }}/excluded.pkgs"
+    excluded_pkglist: "{{ logfile | dirname }}/excluded.{{ distribution }}{{ release }}.pkgs"
     conflict_pkglist: "{{ logfile | dirname }}/conflict.{{ distribution }}{{ release }}.pkgs"
     base_repository: "{{ distribution|upper }}-{{ release }}-release-nexus"
     testing_repository: "{{ distribution|upper }}-{{ release }}-testing-nexus"
