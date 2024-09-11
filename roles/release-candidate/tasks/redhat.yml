@@ -50,7 +50,7 @@
 
 - name: Save excluded packages in file
   copy:
-    src: "{{ role_path }}/files/exclude.pkgs"
+    src: "{{ role_path }}/files/exclude.{{ distribution }}{{ release }}.pkgs"
     dest: "{{ excluded_pkglist }}"
 
 - name: Save unmatched packages (from excluded)
