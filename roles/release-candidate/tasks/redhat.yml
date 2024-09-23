@@ -80,7 +80,7 @@
 
 - name: Print final packages to install
   debug:
-    msg: "{{ package_list_final | b64decode }}" 
+    msg: "{{ {{ package_list_final }} | b64decode }}" 
 
 - name: Install all the packages
   yum:
