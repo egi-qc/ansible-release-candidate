@@ -73,9 +73,14 @@
     dest: "{{ logfile }}"
   when: conflict_file.stat.exists == True
 
-- name: Printa final packages to install
+- name: Print final packages to install
+  slurp:
+    src: "{{ logfile }}"
+  register: package_list_final
+
+- name: Print final packages to install
   debug:
-    msg: "{{ logfile }}"
+    msg: "{{ package_list_final }}"
 
 - name: Install all the packages
   yum:
@@ -83,4 +88,4 @@
     state: latest
     enablerepo: "{{ extra_os_repos }}"
   with_items:
-    - "{{ logfile }}"
+    - "{{ package_list_final }}"
