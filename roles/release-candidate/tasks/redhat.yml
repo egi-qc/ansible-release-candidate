@@ -73,6 +73,10 @@
     dest: "{{ logfile }}"
   when: conflict_file.stat.exists == True
 
+- name: Printa final packages to install
+  debug:
+    msg: "{{ logfile }}"
+
 - name: Install all the packages
   yum:
     name: "{{ item }}"
