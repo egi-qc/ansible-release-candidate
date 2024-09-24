@@ -74,13 +74,8 @@
   when: conflict_file.stat.exists == True
 
 - name: Print final packages to install
-  slurp:
-    src: "{{ logfile }}"
-  register: package_list_final
-
-- name: Print final packages to install
-  debug:
-    msg: "{{ {{ package_list_final }} | b64decode }}" 
+  set_fact:
+    package_list_final: "{{ lookup('file', logfile).splitlines() }}"
 
 - name: Install all the packages
   yum:
