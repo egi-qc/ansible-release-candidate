@@ -2,3 +2,14 @@ umd-release
 umd-release-nexus
 umd-nexus-release
 cvmfs-config-default
+bdii
+bdii-config-site
+bdii-config-top
+emi-bdii-site
+emi-bdii-top
+emi-resource-information-service
+glite-info-plugin-delayed-delete-status
+glite-info-provider-ldap
+glite-info-static
+htcondor-ce-bdii
+nordugrid-arc-infosys-ldap
