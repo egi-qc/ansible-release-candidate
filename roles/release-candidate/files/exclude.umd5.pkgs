@@ -1,7 +1,8 @@
 umd-release
 umd-release-nexus
 umd-nexus-release
-cvmfs-config-default
+cvmfs-config-defaul
+cvmfs-unittestst
 bdii
 bdii-config-site
 bdii-config-top
