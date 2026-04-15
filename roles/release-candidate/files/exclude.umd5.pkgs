@@ -43,3 +43,5 @@ nordugrid-arc-plugins-s3
 nordugrid-arc-plugins-xrootd	
 nordugrid-arc-test-utils	
 nordugrid-arc-wn
+nordugrid-arc-nagios-plugins
+nordugrid-arc-nagios-plugins-egi
