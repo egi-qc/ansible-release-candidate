@@ -71,3 +71,5 @@ nordugrid-arc7-plugins-s3
 nordugrid-arc7-plugins-xrootd
 nordugrid-arc7-test-utils
 nordugrid-arc7-wn
+python3-nordugrid-arc
+python3-nordugrid-arc7
